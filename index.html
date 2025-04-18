@@ -14,48 +14,83 @@
         }
         .quiz-container {
             margin-top: 30px;
+            display: none;
         }
-        .ad-button {
+        .question {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .option-btn {
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .option-btn:hover {
+            background-color: #e0e0e0;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .next-btn {
+            padding: 10px 20px;
             background-color: #4285F4;
             color: white;
             border: none;
-            padding: 10px 20px;
-            margin: 10px;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-        }
-        .ad-button:disabled {
-            background-color: #cccccc;
-            cursor: not-allowed;
-        }
-        .alternative-link {
-            display: none;
-            color: #4285F4;
-            text-decoration: underline;
-            cursor: pointer;
+            margin-top: 20px;
         }
         .ad-counter {
             margin-top: 20px;
             font-size: 14px;
             color: #666;
         }
+        .alternative-link {
+            display: none;
+            color: #4285F4;
+            text-decoration: underline;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .start-btn {
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #4285F4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <h1>Natural Quiz Game</h1>
     
-    <div class="quiz-container">
-        <!-- Quiz content will go here -->
-        <p>Test your knowledge with our daily quizzes!</p>
-        
-        <button id="rewardAdButton" class="ad-button">Watch Ad for Bonus</button>
-        <a id="alternativeLink" class="alternative-link" href="https://yourwebsite.com/premium" target="_blank">Get Premium Features</a>
-        
-        <div class="ad-counter">
-            Ads watched today: <span id="adCount">0</span>/10
-        </div>
+    <button id="startBtn" class="start-btn">Start Quiz</button>
+    
+    <div id="quizContainer" class="quiz-container">
+        <div id="question" class="question"></div>
+        <div id="options" class="options"></div>
+        <div id="result" class="result"></div>
+        <button id="nextBtn" class="next-btn" style="display: none;">Next Question</button>
     </div>
+    
+    <div class="ad-counter">
+        Ads watched today: <span id="adCount">0</span>/10
+    </div>
+    <a id="alternativeLink" class="alternative-link" href="https://yourwebsite.com/premium" target="_blank">Upgrade to Premium for Ad-Free Experience</a>
 
     <script src="app.js"></script>
 </body>
