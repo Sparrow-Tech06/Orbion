@@ -55,6 +55,10 @@
             font-size: 16px;
             margin-top: 20px;
         }
+        .next-btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
         .ad-counter {
             margin-top: 20px;
             font-size: 14px;
@@ -93,7 +97,7 @@
         <div id="options" class="options"></div>
         <div id="result" class="result"></div>
         <div id="timer"></div>
-        <button id="nextBtn" class="next-btn" style="display: none;">Next Question</button>
+        <button id="nextBtn" class="next-btn" style="display: none;" disabled>Next Question</button>
     </div>
     
     <div class="ad-counter">
@@ -205,7 +209,8 @@
             });
             
             resultElement.textContent = '';
-            nextBtn.style.display = 'none';
+            nextBtn.style.display = 'block';
+            nextBtn.disabled = true;
             timerElement.textContent = '';
         }
 
@@ -242,7 +247,7 @@
         function startTimer() {
             clearInterval(timer); // Clear any existing timer
             timeLeft = 10;
-            nextBtn.style.display = 'block';
+            nextBtn.disabled = true;
             
             timer = setInterval(() => {
                 timerElement.textContent = `Next question in: ${timeLeft}s`;
@@ -250,7 +255,8 @@
                 
                 if (timeLeft < 0) {
                     clearInterval(timer);
-                    proceedToNextQuestion();
+                    timerElement.textContent = '';
+                    nextBtn.disabled = false;
                 }
             }, 1000);
         }
