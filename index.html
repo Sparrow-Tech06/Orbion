@@ -71,7 +71,7 @@
             cursor: pointer;
             margin-top: 20px;
         }
-        .start-btn {
+        .start-btn, .play-again-btn {
             padding: 15px 30px;
             font-size: 18px;
             background-color: #4285F4;
@@ -79,11 +79,16 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            margin-top: 20px;
         }
         #timer {
             margin-top: 10px;
             font-size: 18px;
             color: #4285F4;
+        }
+        .final-result {
+            font-size: 24px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -98,6 +103,12 @@
         <div id="result" class="result"></div>
         <div id="timer"></div>
         <button id="nextBtn" class="next-btn" style="display: none;" disabled>Next Question</button>
+    </div>
+    
+    <div id="resultContainer" style="display: none;">
+        <div class="final-result">Quiz Completed!</div>
+        <div id="finalScore"></div>
+        <button id="playAgainBtn" class="play-again-btn">Play Again</button>
     </div>
     
     <div class="ad-counter">
@@ -142,6 +153,9 @@
         const adCountElement = document.getElementById('adCount');
         const alternativeLink = document.getElementById('alternativeLink');
         const timerElement = document.getElementById('timer');
+        const resultContainer = document.getElementById('resultContainer');
+        const finalScoreElement = document.getElementById('finalScore');
+        const playAgainBtn = document.getElementById('playAgainBtn');
 
         // Initialize the app
         document.addEventListener('DOMContentLoaded', function() {
@@ -150,6 +164,7 @@
             
             startBtn.addEventListener('click', startQuiz);
             nextBtn.addEventListener('click', proceedToNextQuestion);
+            playAgainBtn.addEventListener('click', resetQuiz);
         });
 
         // Load ad count from localStorage
@@ -211,6 +226,14 @@
             resultElement.textContent = '';
             nextBtn.style.display = 'block';
             nextBtn.disabled = true;
+            
+            // Change button text for last question
+            if (currentQuestionIndex === quizQuestions.length - 1) {
+                nextBtn.textContent = 'Submit';
+            } else {
+                nextBtn.textContent = 'Next Question';
+            }
+            
             timerElement.textContent = '';
         }
 
@@ -246,7 +269,7 @@
         // Timer function
         function startTimer() {
             clearInterval(timer); // Clear any existing timer
-            timeLeft = 10;
+            timeLeft = 4;
             nextBtn.disabled = true;
             
             timer = setInterval(() => {
@@ -276,16 +299,22 @@
 
         // End quiz and show ad (Android only)
         function endQuiz() {
-            questionElement.textContent = `Quiz Completed! Your score: ${score}/${quizQuestions.length}`;
-            optionsElement.innerHTML = '';
-            resultElement.textContent = '';
-            nextBtn.style.display = 'none';
-            timerElement.textContent = '';
+            quizContainer.style.display = 'none';
+            resultContainer.style.display = 'block';
+            finalScoreElement.textContent = `Your score: ${score}/${quizQuestions.length}`;
             
             // Only show ad on Android devices
             if (window.Android && typeof window.Android.showInterstitialAd === 'function') {
                 showInterstitialAd();
             }
+        }
+
+        // Reset quiz
+        function resetQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            resultContainer.style.display = 'none';
+            startQuiz();
         }
 
         // Show interstitial ad function
@@ -318,3 +347,4 @@
     </script>
 </body>
 </html>
+
