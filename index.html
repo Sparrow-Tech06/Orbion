@@ -1,263 +1,62 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    
     <meta charset="UTF-8">
-    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no,viewport-fit=cover"> 
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-title" content="FactBook - Explore Amazing Facts">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="FactBook - Explore Amazing Facts">
-    <meta name="application-name" content="FactBook - Explore Amazing Facts">
-    <meta name="msapplication-TileColor" content="#7e57c2">
-    <meta name="theme-color" content="#7e57c2">
-    <meta name="color-scheme" content="light">
-    <meta name="google" content="notranslate">
-    <meta name="robots" content="noindex">
-    
-    <link rel="icon" href="assect/factbook.png" type="image/x-icon" sizes="32x32"/>
-    
-    <meta property="og:title" content="FactBook - Explore Amazing Facts">
-    <meta property="og:description" content="Discover nature, science, history, and more!">
-    
-    <title> FactBook - Explore Amazing Facts </title>
-    <meta name="description" content="FactBook provides you with interesting facts about nature, science, history, and more!. Share them on WhatsApp or like them easily.">
-    
-    
-    <meta name="robots" content="noindex, nofollow, noarchive"> <!--Bots are blocked by this tag -->
-    
-    <!------------------------------------------------------------------
-      ---------------------------Bootstrap CSS --------------------------
-      ------------------------------------------------------------------->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
-  
-  <!-- Vue.js CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
-  
-  <link rel="stylesheet" href="style.css?v=1.6.87">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natural Quiz Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        .quiz-container {
+            margin-top: 30px;
+        }
+        .ad-button {
+            background-color: #4285F4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .ad-button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .alternative-link {
+            display: none;
+            color: #4285F4;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .ad-counter {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
 </head>
-
 <body>
+    <h1>Natural Quiz Game</h1>
     
-    <!-- This is Header -->
-    <header class="navbar navbar-expand-lg" id="header">
-      <div class="container-fluid">
-        <span aria-label="Open Sidebar" onclick="openNav()">&#9776; </span>
+    <div class="quiz-container">
+        <!-- Quiz content will go here -->
+        <p>Test your knowledge with our daily quizzes!</p>
         
-        <span class="text-custom" style="font-size:20px; font-weight:600;"> FactBook </span>
-    
-     </div>
-   </header>
-
-
-    <!-- Carousel -->
-    <div id="carouselExample" class="carousel slide container" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="https://picsum.photos/600/200?random=1" class="d-block w-100" alt="...">
+        <button id="rewardAdButton" class="ad-button">Watch Ad for Bonus</button>
+        <a id="alternativeLink" class="alternative-link" href="https://yourwebsite.com/premium" target="_blank">Get Premium Features</a>
+        
+        <div class="ad-counter">
+            Ads watched today: <span id="adCount">0</span>/10
         </div>
-        <div class="carousel-item">
-          <img src="https://picsum.photos/600/200?random=2" class="d-block w-100" alt="...">
-        </div>
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
     </div>
 
-   
-    <!-- Navigation Drawer -->
-   <div class="sidebar" id="sidebar" role="navigation" aria-hidden="tru" aria-labelledby="sidebar-header">
-      <div class="sidebar-header text-center" id="sidebar-header">
-         <button aria-label="Close Sidebar" class="closebtn" onclick="closeNav()"> <i class="bi bi-x-circle-fill"></i> </button>
-         <img src="assect/factbook.png" class="img-fluid my-4" alt="App Logo" loading="lazy" draggable="false">
-     </div>
-    <ul>
-      <li><a href="#" onclick="closeNav()"><i class="bi bi-house-door"></i> Home</a></li>
-      <li><a onclick="window.location.href='https://t.me/MyCash06';" target="_blank"><i class="bi bi-telegram"></i> Join Our Community</a></li>
-      <li><a onclick="window.location.href='quiz';" target="_blank"><i class="bi bi-controller"></i> Play Quiz </a></li>
-      <li><a href="contact" target="_self"  > <i class="bi bi-envelope"></i> Contact Us</a></li>
-      <li><a href="notifications.php" > <i class="bi bi-bell"></i> Notifications </a></li>
-               
-     <!-- More Dropdown -->   
-      <li>
-         <a href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#moreLinks" aria-expanded="false" aria-controls="moreLinks">
-            <i class="bi bi-three-dots"></i> More...
-        </a>
-       
-        <ul id="moreLinks" class="collapse">
-            <li><a href="docs/about-us"  > <i class="bi bi-info-circle"></i> About Us </a></li> 
-            <li><a href="docs/terms-conditions"  > <i class="bi bi-file-earmark-text"></i> T & C </a></li> 
-            <li><a href="docs/privacy-policy"  > <i class="bi bi-shield-lock"></i> Privacy Policy </a></li> 
-            <li><a href="docs/Disclaimer"  > <i class="bi bi-shield-exclamation"></i> Disclaimer </a></li>
-        </ul>
-      </li>
-     
-    </ul>
-  </div>
-
-    <!-- Black overlay -->
-    <div class="overlay" id="overlay" onclick="closeNav()"></div>
-  
-    <!-- Loader container -->
-    <div id="loader">
-        <div class="pulse"></div>
-   </div>
-   
-   <!--------------------------------------------------------------------------
-    ---------------------------------------------------------------------------
-    --------------------------------------------------------------------------->
-
-    <!-- Main Content Gose Here -->
-    <main class="container my-0 py-3" id="content">
-
-      <section>
-            <!-- Search Bar -->
-            <div class="search-bar">
-                <i class="bi bi-search"></i>
-                <input type="Search" id="searchInput" placeholder="Search Recent Activity...">
-            </div>
-
-
-            <!-- Categories -->
-            <div class="categories mb-2">
-
-              <a href="pages/nature-facts" class="category">
-                <img src="https://picsum.photos/50?random=1" alt="Nature">
-                <p>Nature</p>
-              </a>
-              <a href="pages/science-facts" class="category">
-                <img src="https://picsum.photos/50?random=2" alt="Science">
-                <p>Science</p>
-              </a>
-              <a href="pages/history-facts" class="category">
-                <img src="https://picsum.photos/50?random=3" alt="Historical">
-                <p>Historical</p>
-              </a>
-              <a href="pages/human-psychology" class="category">
-                <img src="https://picsum.photos/50?random=4" alt="Psychology">
-                <p>Psychology</p>
-              </a>
-              <a href="pages/geography" class="category">
-                <img src="https://picsum.photos/50?random=5" alt="Geography">
-                <p>Geography</p>
-              </a>
-               <a href="pages/pop-culture" class="category">
-                <img src="https://picsum.photos/50?random=5" alt="Pop Culture">
-                <p>Pop Culture</p>
-              </a>
-
-            </div>
-        
-      </section>
-                
-
-        <h3 class="my-3"> Explore Fact Categories </h3>
-        <section id="recentActivity">
-                    
-  <a href="pages/nature-facts" class="card-custom independence-card" data-name="Fascinating Nature Facts">
-    <div>
-      <h5 class="card-title"> Fascinating Nature Facts </h5>
-      <p class="card-text">Discover the secrets of nature, from unique animals to breathtaking landscapes.</p>
-      <span class="play-button"> Know more </span>
-    </div>
-    <img class="icon" src="assect/forest.png" alt="Nature Icon" loading="lazy" draggable="false">
-  </a>
-
-  <a href="pages/science-facts" class="card-custom gk-card" data-name="Mind-Blowing Science Facts">
-    <div>
-      <h5 class="card-title"> Mind-Blowing Science Facts </h5>
-      <p class="card-text"> Explore fascinating facts about space, technology, and human anatomy. </p>
-      <span class="play-button"> Know more </span>
-    </div>
-    <img class="icon" src="assect/space-shuttle.png" alt="Science Icon" loading="lazy" draggable="false">
-  </a>
-
-  <a href="pages/history-facts" class="card-custom bollywood-card" data-name="Historical Wonders">
-    <div>
-      <h5 class="card-title"> Historical Wonders </h5>
-      <p class="card-text"> Uncover stories of ancient civilizations and remarkable events in history. </p>
-      <span class="play-button">Know more</span>
-    </div>
-    <img class="icon" src="assect/time-machine.png" alt="History Icon" loading="lazy" draggable="false">
-  </a>
-
-  <a href="pages/human-psychology" class="card-custom sports-card" data-name="Human Psychology Facts">
-    <div>
-      <h5 class="card-title"> Human Psychology Facts </h5>
-      <p class="card-text"> Dive into the mysteries of the human brain and behavior. </p>
-      <span class="play-button">Know more</span>
-    </div>
-    <img class="icon" src="assect/brain.png" alt="Psychology Icon" loading="lazy" draggable="false">
-  </a>
-  
-  <a href="pages/geography" class="card-custom politics-card" data-name="Geography Facts">
-    <div>
-      <h5 class="card-title"> Geography Facts </h5>
-      <p class="card-text"> From Mountains to Oceans: Geography Facts to Explore. </p>
-      <span class="play-button">Know more</span>
-    </div>
-    <img class="icon" src="assect/earth.png" alt="Earth Icon" loading="lazy" draggable="false">
-  </a>
-
-  <a href="pages/pop-culture" class="card-custom politics-card" data-name="Pop Culture Facts"> 
-    <div>
-      <h5 class="card-title"> Pop Culture Facts </h5>
-      <p class="card-text"> Learn quirky and hidden facts about movies, music, and TV shows. </p>
-      <span class="play-button">Know more</span>
-    </div>
-    <img class="icon" src="assect/clapperboard.png" alt="Entertainment Icon" loading="lazy" draggable="false">
-  </a>
-  
-  <div class="card-custom politics-card" data-name="Play Facts Quiz"> 
-    <div>
-      <h5 class="card-title"> Play Facts Quiz </h5>
-      <p class="card-text"> Challenge yourself with fun quizzes and showcase your skills! </p>
-      <a href="quiz" class="play-button"> Play Quiz </a>
-    </div>
-    <img class="icon" src="assect/quizee-time.png" alt="Quiz Icon" loading="lazy" draggable="false">
-  </div>
-        
-        </section>
-
-        <div class="no-results">No matching results found.</div>
-    </main>
-    
-    <!--------------------------------------------------------------------------------
-     ------------------------------ Floating Action Quiz Button ----------------------
-     --------------------------------------------------------------------------------->
-    <!-- <a href="earning" class="fab" id="fab"  > -->
-    <!-- <img src="assect/factbook.png" class="img-fluid" alt="quiz logo" draggable="false"> -->
-    <!-- <a> -->
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" defer></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" defer></script>
-    
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
-    
-    <!-- Include the connection alert JS -->
-    <script src="connection-alert.js?v=1.4"></script>
-  
-    <!--My Custom JS FILE-->
-    <script src="script.js?v=1.2.93" defer></script>
- 
-
+    <script src="app.js"></script>
 </body>
-
 </html>
-
-
