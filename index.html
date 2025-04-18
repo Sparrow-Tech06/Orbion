@@ -37,6 +37,9 @@
         .option-btn:hover {
             background-color: #e0e0e0;
         }
+        .option-btn:disabled {
+            cursor: not-allowed;
+        }
         .result {
             margin-top: 20px;
             font-weight: bold;
@@ -73,6 +76,11 @@
             border-radius: 5px;
             cursor: pointer;
         }
+        #timer {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #4285F4;
+        }
     </style>
 </head>
 <body>
@@ -84,6 +92,7 @@
         <div id="question" class="question"></div>
         <div id="options" class="options"></div>
         <div id="result" class="result"></div>
+        <div id="timer"></div>
         <button id="nextBtn" class="next-btn" style="display: none;">Next Question</button>
     </div>
     
@@ -92,6 +101,214 @@
     </div>
     <a id="alternativeLink" class="alternative-link" href="https://yourwebsite.com/premium" target="_blank">Upgrade to Premium for Ad-Free Experience</a>
 
-    <script src="app.js"></script>
+    <script>
+        // Quiz data
+        const quizQuestions = [
+            {
+                question: "What is the capital of France?",
+                options: ["London", "Paris", "Berlin", "Madrid"],
+                correctAnswer: "Paris"
+            },
+            {
+                question: "Which planet is known as the Red Planet?",
+                options: ["Venus", "Mars", "Jupiter", "Saturn"],
+                correctAnswer: "Mars"
+            },
+            {
+                question: "What is the largest mammal?",
+                options: ["Elephant", "Blue Whale", "Giraffe", "Polar Bear"],
+                correctAnswer: "Blue Whale"
+            }
+        ];
+
+        // Game state
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let adsWatchedToday = 0;
+        let timer;
+        let timeLeft = 10;
+
+        // DOM elements
+        const startBtn = document.getElementById('startBtn');
+        const quizContainer = document.getElementById('quizContainer');
+        const questionElement = document.getElementById('question');
+        const optionsElement = document.getElementById('options');
+        const resultElement = document.getElementById('result');
+        const nextBtn = document.getElementById('nextBtn');
+        const adCountElement = document.getElementById('adCount');
+        const alternativeLink = document.getElementById('alternativeLink');
+        const timerElement = document.getElementById('timer');
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            loadAdCount();
+            updateAdCounterUI();
+            
+            startBtn.addEventListener('click', startQuiz);
+            nextBtn.addEventListener('click', proceedToNextQuestion);
+        });
+
+        // Load ad count from localStorage
+        function loadAdCount() {
+            const today = new Date().toDateString();
+            const storedData = localStorage.getItem('adData');
+            
+            if (storedData) {
+                const { date, count } = JSON.parse(storedData);
+                if (date === today) {
+                    adsWatchedToday = count;
+                }
+            }
+            updateAdCounterUI();
+        }
+
+        // Save ad count to localStorage
+        function saveAdCount() {
+            const today = new Date().toDateString();
+            localStorage.setItem('adData', JSON.stringify({
+                date: today,
+                count: adsWatchedToday
+            }));
+            updateAdCounterUI();
+        }
+
+        // Update ad counter UI
+        function updateAdCounterUI() {
+            adCountElement.textContent = adsWatchedToday;
+            
+            if (adsWatchedToday >= 10) {
+                alternativeLink.style.display = 'block';
+            } else {
+                alternativeLink.style.display = 'none';
+            }
+        }
+
+        // Start quiz
+        function startQuiz() {
+            startBtn.style.display = 'none';
+            quizContainer.style.display = 'block';
+            showQuestion();
+        }
+
+        // Show current question
+        function showQuestion() {
+            const currentQuestion = quizQuestions[currentQuestionIndex];
+            questionElement.textContent = currentQuestion.question;
+            
+            optionsElement.innerHTML = '';
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('option-btn');
+                button.addEventListener('click', () => selectAnswer(option));
+                optionsElement.appendChild(button);
+            });
+            
+            resultElement.textContent = '';
+            nextBtn.style.display = 'none';
+            timerElement.textContent = '';
+        }
+
+        // Handle answer selection
+        function selectAnswer(selectedOption) {
+            const currentQuestion = quizQuestions[currentQuestionIndex];
+            const options = optionsElement.querySelectorAll('.option-btn');
+            
+            // Disable all options
+            options.forEach(option => {
+                option.disabled = true;
+                if (option.textContent === currentQuestion.correctAnswer) {
+                    option.style.backgroundColor = '#4CAF50';
+                } else if (option.textContent === selectedOption && selectedOption !== currentQuestion.correctAnswer) {
+                    option.style.backgroundColor = '#F44336';
+                }
+            });
+            
+            // Show result
+            if (selectedOption === currentQuestion.correctAnswer) {
+                score++;
+                resultElement.textContent = 'Correct!';
+                resultElement.style.color = '#4CAF50';
+            } else {
+                resultElement.textContent = `Wrong! Correct answer is ${currentQuestion.correctAnswer}`;
+                resultElement.style.color = '#F44336';
+            }
+            
+            // Start 10-second timer
+            startTimer();
+        }
+
+        // Timer function
+        function startTimer() {
+            clearInterval(timer); // Clear any existing timer
+            timeLeft = 10;
+            nextBtn.style.display = 'block';
+            
+            timer = setInterval(() => {
+                timerElement.textContent = `Next question in: ${timeLeft}s`;
+                timeLeft--;
+                
+                if (timeLeft < 0) {
+                    clearInterval(timer);
+                    proceedToNextQuestion();
+                }
+            }, 1000);
+        }
+
+        // Proceed to next question
+        function proceedToNextQuestion() {
+            clearInterval(timer);
+            timerElement.textContent = '';
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex < quizQuestions.length) {
+                showQuestion();
+            } else {
+                endQuiz();
+            }
+        }
+
+        // End quiz and show ad (Android only)
+        function endQuiz() {
+            questionElement.textContent = `Quiz Completed! Your score: ${score}/${quizQuestions.length}`;
+            optionsElement.innerHTML = '';
+            resultElement.textContent = '';
+            nextBtn.style.display = 'none';
+            timerElement.textContent = '';
+            
+            // Only show ad on Android devices
+            if (window.Android && typeof window.Android.showInterstitialAd === 'function') {
+                showInterstitialAd();
+            }
+        }
+
+        // Show interstitial ad function
+        function showInterstitialAd() {
+            if (adsWatchedToday >= 10) {
+                alert("You've reached the maximum of 10 ads for today. Come back tomorrow!");
+                return;
+            }
+            
+            showInterstitialAdInApp(function(success) {
+                if (success) {
+                    adsWatchedToday++;
+                    saveAdCount();
+                    
+                    // Optional: Give reward for watching ad
+                    alert("Thanks for completing the quiz and watching the ad!");
+                }
+            });
+        }
+
+        // Android interstitial ad function
+        function showInterstitialAdInApp(callback) {
+            if (window.Android && typeof window.Android.showInterstitialAd === 'function') {
+                window.Android.showInterstitialAd();
+                callback(true);
+            } else {
+                callback(false);
+            }
+        }
+    </script>
 </body>
 </html>
