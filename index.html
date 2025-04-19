@@ -255,6 +255,29 @@
             color: white;
             font-size: 24px;
         }
+    /******************************************************/
+       .modal-content {
+      background: linear-gradient(135deg, #fdfbfb, #ebedee);
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    .modal-header {
+      border-bottom: none;
+      background-color: #0d6efd;
+      color: white;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+    }
+    .modal-body img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+    .modal-footer {
+      border-top: none;
+    }
+        
     </style>
 </head>
 <body oncontxtmenu="return false;">
@@ -403,8 +426,42 @@
         </div>
     </div>
 
+
+    <!-- Modal -->
+<div class="modal fade" id="pagePopup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="popupLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="popupLabel">Important Notice</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <img src="https://picsum.photos/400/200" alt="Popup Image">
+        <p>Yeh popup delay ke baad show hota hai. Aap delay time customize kar sakte ho.</p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-primary px-4" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="version-check.js"> </script>
+
+    <script>
+  // Customize delay time here (in milliseconds)
+  const delayTime = 0000; // 3000 = 3 seconds
+
+  window.addEventListener('load', function () {
+    setTimeout(() => {
+      const popup = new bootstrap.Modal(document.getElementById('pagePopup'));
+      popup.show();
+    }, delayTime);
+  });
+</script>
     
 </body>
 </html>
