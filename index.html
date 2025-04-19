@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Natural Quiz Game</title>
+    <!-- Add SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,29 +15,33 @@
             text-align: center;
         }
         .quiz-container {
-            margin-top: 30px;
+            margin: 30px auto ;
             display: none;
+            max-width: 660px;
         }
         .question {
             font-size: 20px;
-            margin-bottom: 20px;
+            margin-bottom: 40px;
+            background-color: #FFBE98 ;
+            padding: 40px 20px;
+            border: 2px solid orange;
+            border-radius: 16px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
         }
         .options {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 15px;
+            margin: 20px auto;
+            max-width: 90%;
         }
         .option-btn {
-            padding: 10px;
+            padding: 15px 10px;
             font-size: 16px;
             cursor: pointer;
-            background-color: #f0f0f0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        .option-btn:hover {
-            background-color: #e0e0e0;
+            background-color: #ffffff;
+            border: 1px solid #e3e3e3;
+            border-radius: 15px;
         }
         .option-btn:disabled {
             cursor: not-allowed;
@@ -72,9 +78,9 @@
             margin-top: 20px;
         }
         .start-btn, .play-again-btn {
-            padding: 15px 30px;
-            font-size: 18px;
-            background-color: #4285F4;
+            padding: 10px 30px;
+            font-size: 16px;
+            background-color: #8B5DFF;
             color: white;
             border: none;
             border-radius: 5px;
@@ -86,14 +92,30 @@
             font-size: 18px;
             color: #4285F4;
         }
+
+    /*************************************/
+        #resultContainer {
+             height: auto;
+             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+             padding: 30px 20px;
+             border-radius: 30px;
+             display: flex;
+             justify-content: center;
+             align-content: center;
+             gap: 60px;
+        }    
         .final-result {
             font-size: 24px;
             margin-bottom: 20px;
         }
+        #finalScore {
+            margin: 40px auto;
+            color: #60B5FF ;
+        }
     </style>
 </head>
 <body>
-    <h1>Natural Quiz Game</h1>
+    <h1> Quiz Game </h1>
     
     <button id="startBtn" class="start-btn">Start Quiz</button>
     
@@ -116,6 +138,8 @@
     </div>
     <a id="alternativeLink" class="alternative-link" href="https://www.arm.com/glossary/cpu" target="_blank"> Woo, YOU played 10 quizs </a>
 
+    <!-- Add SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         // Quiz data
         const quizQuestions = [
@@ -246,9 +270,9 @@
             options.forEach(option => {
                 option.disabled = true;
                 if (option.textContent === currentQuestion.correctAnswer) {
-                    option.style.backgroundColor = '#4CAF50';
+                    option.style.backgroundColor = '#AAD9BB';
                 } else if (option.textContent === selectedOption && selectedOption !== currentQuestion.correctAnswer) {
-                    option.style.backgroundColor = '#F44336';
+                    option.style.backgroundColor = '#EF9595';
                 }
             });
             
@@ -293,20 +317,41 @@
             if (currentQuestionIndex < quizQuestions.length) {
                 showQuestion();
             } else {
-                endQuiz();
+                // Show confirmation before showing ad
+                showAdConfirmation();
             }
         }
 
-        // End quiz and show ad (Android only)
-        function endQuiz() {
+        // Show confirmation before showing ad
+        function showAdConfirmation() {
+            Swal.fire({
+                title: 'Show Ad?',
+                text: 'Are you sure you want to watch an ad to continue?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, show ad',
+                cancelButtonText: 'No, show results',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                showConfirmButton: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // User chose to watch ad
+                    showInterstitialAd();
+                } else {
+                    // User chose to skip ad
+                    showFinalResults();
+                }
+            });
+        }
+
+        // Show final results
+        function showFinalResults() {
             quizContainer.style.display = 'none';
             resultContainer.style.display = 'block';
             finalScoreElement.textContent = `Your score: ${score}/${quizQuestions.length}`;
-            
-            // Only show ad on Android devices
-            if (window.Android && typeof window.Android.showInterstitialAd === 'function') {
-                showInterstitialAd();
-            }
         }
 
         // Reset quiz
@@ -320,7 +365,12 @@
         // Show interstitial ad function
         function showInterstitialAd() {
             if (adsWatchedToday >= 10) {
-                alert("You've reached the maximum of 10 ads for today. Come back tomorrow!");
+                Swal.fire({
+                    title: 'Ad Limit Reached',
+                    text: "You've reached the maximum of 10 ads for today. Come back tomorrow!",
+                    icon: 'info'
+                });
+                showFinalResults();
                 return;
             }
             
@@ -329,8 +379,17 @@
                     adsWatchedToday++;
                     saveAdCount();
                     
-                    // Optional: Give reward for watching ad
-                    alert("Thanks for completing the quiz and watching the ad!");
+                    // Show thank you message
+                    Swal.fire({
+                        title: 'Thank You!',
+                        text: 'Thanks for watching the ad!',
+                        icon: 'success'
+                    }).then(() => {
+                        showFinalResults();
+                    });
+                } else {
+                    // If ad failed to show, just display results
+                    showFinalResults();
                 }
             });
         }
@@ -341,10 +400,15 @@
                 window.Android.showInterstitialAd();
                 callback(true);
             } else {
-                callback(false);
+                // For testing in browser without Android
+                Swal.fire({
+                    title: 'Ad Simulation',
+                    text: 'This would show an ad in the Android app',
+                    icon: 'info'
+                });
+                callback(false); // Simulate success for testing
             }
         }
     </script>
 </body>
 </html>
-
