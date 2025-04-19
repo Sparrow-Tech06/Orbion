@@ -1,111 +1,415 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Planets of the Solar System</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar System Explorer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --card-bg: #1E1E1E;
+            --text-primary: #FFFFFF;
+            --text-secondary: #BBBBBB;
+            --mercury: #8A8A8A;
+            --venus: #E6CDCB;
+            --earth: #6D8BC2;
+            --mars: #D14C32;
+            --jupiter: #C88B3A;
+            --saturn: #E3D4B5;
+            --uranus: #D1E7E7;
+            --neptune: #5B5DDF;
 
-  <style>
-    .planet-container {
-      max-width: 660px;
-      margin: auto;
-    }
+            --space-dark: #0B0D17;
+            --space-blue: #D0D6F9;
+            --space-white: #FFFFFF;
 
-    .planet-card {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      background-color: #ffffff;
-      padding: 1rem;
-      border-radius: 12px;
-      margin-bottom: 1rem;
-      transition: transform 0.2s ease;
-      border: 1px solid #e3e3e3;
-    }
+            --list-item-bg: #e2e8f0;
+            --list-item-hover-bg: #cbd5e1;
+            --social-icon-bg: #ffffff;
 
-    .planet-icon {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      object-fit: cover;
-      flex-shrink: 0;
-    }
+            --toggle-icon-filter: invert(1);
+            --close-btn-filter: invert(1);
+        }
 
-    .planet-content h5 {
-      margin: 0;
-      font-weight: 600;
-    }
+        body {
+            font-family: 'Roboto', sans-serif;
+            bbackground-color: var(--space-dark);
+            color: var(--space-white);
+            background-image: radial-gradient(circle at center, #1a1a2e 0%, #0B0D17 100%);
+            margin: 0;
+            padding: 0;
+            margin: 0 auto;
+        }
+ /******************************************************/
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
 
-    .planet-content p {
-      margin: 0;
-      font-size: 0.9rem;
-      color: #555;
-    }
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite ease-in-out;
+        }
 
-    .chevron {
-      margin-left: auto;
-      color: #888;
-      font-size: 1.5rem;
-    }
-  </style>
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+/********************************************************/
+        .navbar {
+            background-color: var(--space-dark);
+        }
+        .offcanvas {
+            background: var(--space-dark);
+            backdrop-filter: blur(50px);
+        }
+
+        .nav-link {
+            color: var(--text-primary);
+        }
+
+        .navbar-toggler-icon {
+            -webkit-filter: var(--toggle-icon-filter);
+                    filter: var(--toggle-icon-filter);
+            border: none;
+        }
+        .navbar-toggler {
+            border: none;
+            padding: 0.2rem;
+        }
+
+        .navbar-brand, .offcanvas-title {
+            color: var(--text-primary);
+        } 
+        
+        .btn-close {
+            -webkit-filter: var(--close-btn-filter);
+                    filter: var(--close-btn-filter);
+        }
+
+        .list-group-item {
+            border: none;
+            padding: 15px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            margin-bottom: 10px;
+            border-radius: 10px;
+            -webkit-transition: background 0.3s ease;
+            -o-transition: background 0.3s ease;
+            transition: background 0.3s ease;
+        }
+
+        .list-group-item a {
+            text-decoration: none;
+            color: var(--text-primary);
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: justify;
+                -ms-flex-pack: justify;
+                    justify-content: space-between;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
+        }
+
+        .list-group-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }  
+
+    /*********************************************************/
+    
+       .social-icons {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                    justify-content: center;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        .social-icons a {
+            text-decoration: none;
+            font-size: 1.2rem;
+            color: white;
+            width: 35px;
+            height: 35px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                    justify-content: center;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
+            border-radius: 50%;
+            -webkit-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .follow { color : var(--text-primary); }
+
+        .telegram { background: #0088cc; }
+        .whatsapp { background: #25d366; }
+        .instagram { background: -o-linear-gradient(45deg, #fd5949, #d6249f, #285AEB); 
+                     background: linear-gradient(45deg, #fd5949, #d6249f, #285AEB);    }  
+/************************************************************/
+        .planet-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            margin: 30px auto;
+            overflow: hidden;
+            border-left: 3px solid;
+            max-width: 660px;
+        }
+
+        .planet-link {
+            display: flex;
+            align-items: center;
+            padding: 20px 15px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .planet-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 15px;
+            object-fit: cover;
+        }
+
+        .planet-info {
+            flex: 1;
+        }
+
+        .planet-name {
+            font-size: 18px;
+            margin: 0;
+            color: var(--text-primary);
+        }
+
+        .planet-desc {
+            font-size: 14px;
+            margin: 5px 0 0;
+            color: var(--text-secondary);
+        }
+
+        .planet-arrow {
+            color: var(--text-secondary);
+            font-size: 18px;
+        }
+
+        /* Planet specific colors */
+        .mercury { border-color: var(--mercury); }
+        .venus { border-color: var(--venus); }
+        .earth { border-color: var(--earth); }
+        .mars { border-color: var(--mars); }
+        .jupiter { border-color: var(--jupiter); }
+        .saturn { border-color: var(--saturn); }
+        .uranus { border-color: var(--uranus); }
+        .neptune { border-color: var(--neptune); }
+
+        .container {
+            padding: 15px;
+        }
+
+        .menu-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+        }
+    </style>
 </head>
-<body oncontextmenu="return false">
-  <div class="container py-5 planet-container">
-    <h2 class="text-center mb-4"><i class="bi bi-globe-americas"></i> Planets of the Solar System</h2>
+<body oncontextmenu="return false;">
 
-    <!-- Mercury -->
-    <a href="planet.html?name=Mercury" class="text-decoration-none text-dark">
-      <div class="planet-card">
-        <img src="https://img.icons8.com/color/96/mercury.png" alt="Mercury" class="planet-icon" />
-        <div class="planet-content">
-          <h5>Mercury</h5>
-          <p>Smallest and closest planet to the Sun.</p>
+    <!-- Fixed Stars Background -->
+    <div class="stars" id="stars"></div>
+
+
+    <!--------------------------------------------------------------------------------------
+     ---------------------------------This Is Header Section--------------------------------
+     --------------------------------------------------------------------------------------->
+    <nav class="navbar navbar-light sticky-top shadow-sm">
+        <div class="container-fluid">
+            <h2 class="navbar-brand fw-bold" onclick="location.reload(); return false;"> Orbion </h2>
+            <button class="navbar-toggler d-block" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
+                <span class="navbar-toggler-icon" style="color: var(--icon-color);"></span>
+            </button>
+            <div class="offcanvas offcanvas-end" id="offcanvasNavbar">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title"> Orbion </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="list-group">
+                      <li class="list-group-item">
+                          <a href="#"><span><i class="bi bi-wallet2 me-2"></i> Wallet </span> <i class="bi bi-chevron-right"></i> </a>
+                      </li>
+                      <li class="list-group-item">
+                          <a href="#"><span><i class="bi bi-shield-lock me-2"></i> Privacy Policy </span> <i class="bi bi-chevron-right"></i> </a>
+                      </li>
+                      <li class="list-group-item">
+                          <a href="#"><span><i class="bi bi-file-earmark-text me-2"></i> Terms of Service </span> <i class="bi bi-chevron-right"> </i></a>
+                      </li>
+                      <li class="list-group-item">
+                          <a href="#"><span><i class="bi bi-question-circle me-2"></i> Help & Support </span> <i class="bi bi-chevron-right"></i> </a>
+                     </li>
+                      <li class="list-group-item">
+                          <a href="#"><span><i class="bi bi-code-slash me-2"></i> Developer Details </span> <i class="bi bi-chevron-right"></i> </a>
+                      </li>
+                  </ul>
+
+                    <!-- Follow Us Section -->
+                    <div class="text-center mt-4">
+                        <h6 class="follow"> Follow Us On </h6>
+                        <div class="social-icons">
+                            <a href="#" class="telegram"><i class="bi bi-telegram"></i></a>
+                            <a href="#" class="whatsapp"><i class="bi bi-whatsapp"></i></a>
+                            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
         </div>
-        <i class="bi bi-chevron-right chevron"></i>
-      </div>
-    </a>
+     </nav>
 
-    <!-- Venus -->
-    <a href="planet.html?name=Venus" class="text-decoration-none text-dark">
-      <div class="planet-card">
-        <img src="https://img.icons8.com/color/96/venus.png" alt="Venus" class="planet-icon" />
-        <div class="planet-content">
-          <h5>Venus</h5>
-          <p>Similar in size to Earth, but extremely hot.</p>
+    <!-----------------------------------------------------------------------
+    --------------------------------- Main Content --------------------------
+    -------------------------------------------------------------------------->
+    <div class="container mt-5">
+        <!-- Mercury -->
+        <div class="planet-card mercury">
+            <a href="mercury.html" class="planet-link">
+                <img src="https://picsum.photos/seed/mercury/200" alt="Mercury" class="planet-img">
+                <div class="planet-info">
+                    <h3 class="planet-name">Mercury</h3>
+                    <p class="planet-desc">Smallest planet, closest to Sun</p>
+                </div>
+                <i class="bi bi-chevron-right planet-arrow"></i>
+            </a>
         </div>
-        <i class="bi bi-chevron-right chevron"></i>
-      </div>
-    </a>
 
-    <!-- Earth -->
-    <a href="planet.html?name=Earth" class="text-decoration-none text-dark">
-      <div class="planet-card">
-        <img src="https://img.icons8.com/color/96/earth-planet.png" alt="Earth" class="planet-icon" />
-        <div class="planet-content">
-          <h5>Earth</h5>
-          <p>The only known planet to support life.</p>
+        <!-- Venus -->
+        <div class="planet-card venus">
+            <a href="venus.html" class="planet-link">
+                <img src="https://picsum.photos/seed/venus/200" alt="Venus" class="planet-img">
+                <div class="planet-info">
+                    <h3 class="planet-name">Venus</h3>
+                    <p class="planet-desc">Hottest planet, Earth's twin</p>
+                </div>
+                <i class="bi bi-chevron-right planet-arrow"></i>
+            </a>
         </div>
-        <i class="bi bi-chevron-right chevron"></i>
-      </div>
-    </a>
 
-    <!-- Mars -->
-    <a href="planet.html?name=Mars" class="text-decoration-none text-dark">
-      <div class="planet-card">
-        <img src="https://img.icons8.com/color/96/mars.png" alt="Mars" class="planet-icon" />
-        <div class="planet-content">
-          <h5>Mars</h5>
-          <p>Known as the Red Planet. Potential for life.</p>
+        <!-- Earth -->
+        <div class="planet-card earth">
+            <a href="earth.html" class="planet-link">
+                <img src="https://picsum.photos/seed/earth/200" alt="Earth" class="planet-img">
+                <div class="planet-info">
+                    <h3 class="planet-name">Earth</h3>
+                    <p class="planet-desc">Our home, the blue planet</p>
+                </div>
+                <i class="bi bi-chevron-right planet-arrow"></i>
+            </a>
         </div>
-        <i class="bi bi-chevron-right chevron"></i>
-      </div>
-    </a>
 
-    <!-- Add more planets below in same format -->
-  </div>
+        <!-- Mars -->
+        <div class="planet-card mars">
+            <a href="mars.html" class="planet-link">
+                <img src="https://picsum.photos/seed/mars/200" alt="Mars" class="planet-img">
+                <div class="planet-info">
+                    <h3 class="planet-name">Mars</h3>
+                    <p class="planet-desc">The red planet, future colony</p>
+                </div>
+                <i class="bi bi-chevron-right planet-arrow"></i>
+            </a>
+        </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Jupiter -->
+        <div class="planet-card jupiter">
+            <a href="jupiter.html" class="planet-link">
+                <img src="https://picsum.photos/seed/jupiter/200" alt="Jupiter" class="planet-img">
+                <div class="planet-info">
+                    <h3 class="planet-name">Jupiter</h3>
+                    <p class="planet-desc">Largest planet, gas giant</p>
+                </div>
+                <i class="bi bi-chevron-right planet-arrow"></i>
+            </a>
+        </div>
+
+        <!-- Saturn -->
+        <div class="planet-card saturn">
+            <a href="saturn.html" class="planet-link">
+                <img src="https://picsum.photos/seed/saturn/200" alt="Saturn" class="planet-img">
+                <div class="planet-info">
+                    <h3 class="planet-name">Saturn</h3>
+                    <p class="planet-desc">Ringed beauty of solar system</p>
+                </div>
+                <i class="bi bi-chevron-right planet-arrow"></i>
+            </a>
+        </div>
+
+        <!-- Uranus -->
+        <div class="planet-card uranus">
+            <a href="uranus.html" class="planet-link">
+                <img src="https://picsum.photos/seed/uranus/200" alt="Uranus" class="planet-img">
+                <div class="planet-info">
+                    <h3 class="planet-name">Uranus</h3>
+                    <p class="planet-desc">Ice giant, rotates sideways</p>
+                </div>
+                <i class="bi bi-chevron-right planet-arrow"></i>
+            </a>
+        </div>
+
+        <!-- Neptune -->
+        <div class="planet-card neptune">
+            <a href="neptune.html" class="planet-link">
+                <img src="https://picsum.photos/seed/neptune/200" alt="Neptune" class="planet-img">
+                <div class="planet-info">
+                    <h3 class="planet-name">Neptune</h3>
+                    <p class="planet-desc">Windiest planet, dark and cold</p>
+                </div>
+                <i class="bi bi-chevron-right planet-arrow"></i>
+            </a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Create stars
+        const starsContainer = document.getElementById('stars');
+        const starCount = 100;
+
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            
+            const size = Math.random() * 2 + 1;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.animationDelay = `${Math.random() * 3}s`;
+            
+            starsContainer.appendChild(star);
+        }
+    </script>
 </body>
 </html>
