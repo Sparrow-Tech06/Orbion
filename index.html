@@ -8,9 +8,27 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
         :root {
-            --card-bg: #1E1E1E;
-            --text-primary: #FFFFFF;
-            --text-secondary: #BBBBBB;
+            --background: #f8f9fa;
+            --text-color: #000000;
+            --text-secondary: ;
+            --accent : #60B5FF;
+            --bg-card: #ffffff;
+
+            --off-canvas: #f8f9fa;
+
+            --card-radius: 10px;
+            --max-width: 660px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+
+            --list-item-bg: #e2e8f0;
+            --list-item-hover-bg: #cbd5e1;
+            --social-icon-bg: #ffffff;
+
+            --toggle-icon-filter: invert(0) ;
+            --close-btn-filter: invert(0);
+
+            --hover: #AFDDFF;
+
             --mercury: #8A8A8A;
             --venus: #E6CDCB;
             --earth: #6D8BC2;
@@ -19,61 +37,54 @@
             --saturn: #E3D4B5;
             --uranus: #D1E7E7;
             --neptune: #5B5DDF;
-
-            --space-dark: #0B0D17;
-            --space-blue: #D0D6F9;
-            --space-white: #FFFFFF;
-
-            --list-item-bg: #e2e8f0;
-            --list-item-hover-bg: #cbd5e1;
-            --social-icon-bg: #ffffff;
-
-            --toggle-icon-filter: invert(1);
-            --close-btn-filter: invert(1);
         }
 
+    @media (prefers-color-scheme: dark) {
+            :root {
+                
+                --background: #3E3F5B;
+                --bg-card: #6a6b9c;
+                --text-color: #ffffff;
+                --text-secondary: #F1EFEC ;
+                --accent: #6a6b9c ;
+
+                --off-canvas: #3E3F5B;
+        
+                --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+                --list-item-bg: #6c6d9e;
+                --list-item-hover-bg: #4a5568;
+                --social-icon-bg: #475569;
+
+                --toggle-icon-filter: invert(1);
+                --close-btn-filter: invert(1);    
+
+                 --hover: #372f50;
+            }
+        }
+
+    /***************************************************/    
         body {
             font-family: 'Roboto', sans-serif;
-            bbackground-color: var(--space-dark);
+            background: var(--background);
             color: var(--space-white);
-            background-image: radial-gradient(circle at center, #1a1a2e 0%, #0B0D17 100%);
+            
             margin: 0;
             padding: 0;
             margin: 0 auto;
         }
- /******************************************************/
-        .stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
 
-        .star {
-            position: absolute;
-            background-color: white;
-            border-radius: 50%;
-            animation: twinkle 3s infinite ease-in-out;
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.8; }
-        }
 /********************************************************/
         .navbar {
-            background-color: var(--space-dark);
+            background-color: var(--accent);
+            color: #ffffff;
         }
         .offcanvas {
-            background: var(--space-dark);
-            backdrop-filter: blur(50px);
+            background-color: var(--off-canvas);
         }
 
         .nav-link {
-            color: var(--text-primary);
+            color: var(--text-color);
         }
 
         .navbar-toggler-icon {
@@ -86,8 +97,12 @@
             padding: 0.2rem;
         }
 
-        .navbar-brand, .offcanvas-title {
-            color: var(--text-primary);
+         .navbar-brand {
+            color: #ffffff;
+        } 
+
+      /*  .navbar-brand, */ .offcanvas-title {
+            color: var(--text-color);
         } 
         
         .btn-close {
@@ -99,8 +114,7 @@
             border: none;
             padding: 15px;
             font-size: 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
+            background: var(--list-item-bg);
             margin-bottom: 10px;
             border-radius: 10px;
             -webkit-transition: background 0.3s ease;
@@ -110,7 +124,7 @@
 
         .list-group-item a {
             text-decoration: none;
-            color: var(--text-primary);
+            color: var(--text-color);
             display: -webkit-box;
             display: -ms-flexbox;
             display: flex;
@@ -122,10 +136,7 @@
                     align-items: center;
         }
 
-        .list-group-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-        }  
+         
 
     /*********************************************************/
     
@@ -160,7 +171,7 @@
                     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .follow { color : var(--text-primary); }
+        .follow { color : var(--text-color); }
 
         .telegram { background: #0088cc; }
         .whatsapp { background: #25d366; }
@@ -168,13 +179,13 @@
                      background: linear-gradient(45deg, #fd5949, #d6249f, #285AEB);    }  
 /************************************************************/
         .planet-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
+            background: var(--bg-card);
             border-radius: 10px;
-            margin: 30px auto;
+            margin: 20px auto;
             overflow: hidden;
-            border-left: 3px solid;
+            border-left: 4px solid;
             max-width: 660px;
+            box-shadow: var(--shadow);
         }
 
         .planet-link {
@@ -182,7 +193,7 @@
             align-items: center;
             padding: 20px 15px;
             text-decoration: none;
-            color: var(--text-primary);
+            color: var(--text-color);
         }
 
         .planet-img {
@@ -200,7 +211,7 @@
         .planet-name {
             font-size: 18px;
             margin: 0;
-            color: var(--text-primary);
+            color: var(--text-color);
         }
 
         .planet-desc {
@@ -236,11 +247,7 @@
         }
     </style>
 </head>
-<body oncontextmenu="return false;">
-
-    <!-- Fixed Stars Background -->
-    <div class="stars" id="stars"></div>
-
+<body oncontxtmenu="return false;">
 
     <!--------------------------------------------------------------------------------------
      ---------------------------------This Is Header Section--------------------------------
@@ -258,9 +265,6 @@
                 </div>
                 <div class="offcanvas-body">
                     <ul class="list-group">
-                      <li class="list-group-item">
-                          <a href="#"><span><i class="bi bi-wallet2 me-2"></i> Wallet </span> <i class="bi bi-chevron-right"></i> </a>
-                      </li>
                       <li class="list-group-item">
                           <a href="#"><span><i class="bi bi-shield-lock me-2"></i> Privacy Policy </span> <i class="bi bi-chevron-right"></i> </a>
                       </li>
@@ -293,11 +297,11 @@
     <!-----------------------------------------------------------------------
     --------------------------------- Main Content --------------------------
     -------------------------------------------------------------------------->
-    <div class="container mt-5">
+    <div class="container mt-3">
         <!-- Mercury -->
         <div class="planet-card mercury">
             <a href="mercury.html" class="planet-link">
-                <img src="https://picsum.photos/seed/mercury/200" alt="Mercury" class="planet-img">
+                <img src="https://picsum.photos/seed/mercury/200" alt="Mercury" class="planet-img" loading="lazy" draggable="false">
                 <div class="planet-info">
                     <h3 class="planet-name">Mercury</h3>
                     <p class="planet-desc">Smallest planet, closest to Sun</p>
@@ -309,7 +313,7 @@
         <!-- Venus -->
         <div class="planet-card venus">
             <a href="venus.html" class="planet-link">
-                <img src="https://picsum.photos/seed/venus/200" alt="Venus" class="planet-img">
+                <img src="https://picsum.photos/seed/venus/200" alt="Venus" class="planet-img" loading="lazy" draggable="false">
                 <div class="planet-info">
                     <h3 class="planet-name">Venus</h3>
                     <p class="planet-desc">Hottest planet, Earth's twin</p>
@@ -321,7 +325,7 @@
         <!-- Earth -->
         <div class="planet-card earth">
             <a href="earth.html" class="planet-link">
-                <img src="https://picsum.photos/seed/earth/200" alt="Earth" class="planet-img">
+                <img src="https://picsum.photos/seed/earth/200" alt="Earth" class="planet-img" loading="lazy" draggable="false">
                 <div class="planet-info">
                     <h3 class="planet-name">Earth</h3>
                     <p class="planet-desc">Our home, the blue planet</p>
@@ -333,7 +337,7 @@
         <!-- Mars -->
         <div class="planet-card mars">
             <a href="mars.html" class="planet-link">
-                <img src="https://picsum.photos/seed/mars/200" alt="Mars" class="planet-img">
+                <img src="https://picsum.photos/seed/mars/200" alt="Mars" class="planet-img" loading="lazy" draggable="false">
                 <div class="planet-info">
                     <h3 class="planet-name">Mars</h3>
                     <p class="planet-desc">The red planet, future colony</p>
@@ -345,7 +349,7 @@
         <!-- Jupiter -->
         <div class="planet-card jupiter">
             <a href="jupiter.html" class="planet-link">
-                <img src="https://picsum.photos/seed/jupiter/200" alt="Jupiter" class="planet-img">
+                <img src="https://picsum.photos/seed/jupiter/200" alt="Jupiter" class="planet-img" loading="lazy" draggable="false">
                 <div class="planet-info">
                     <h3 class="planet-name">Jupiter</h3>
                     <p class="planet-desc">Largest planet, gas giant</p>
@@ -357,7 +361,7 @@
         <!-- Saturn -->
         <div class="planet-card saturn">
             <a href="saturn.html" class="planet-link">
-                <img src="https://picsum.photos/seed/saturn/200" alt="Saturn" class="planet-img">
+                <img src="https://picsum.photos/seed/saturn/200" alt="Saturn" class="planet-img" loading="lazy" draggable="false">
                 <div class="planet-info">
                     <h3 class="planet-name">Saturn</h3>
                     <p class="planet-desc">Ringed beauty of solar system</p>
@@ -369,7 +373,7 @@
         <!-- Uranus -->
         <div class="planet-card uranus">
             <a href="uranus.html" class="planet-link">
-                <img src="https://picsum.photos/seed/uranus/200" alt="Uranus" class="planet-img">
+                <img src="https://picsum.photos/seed/uranus/200" alt="Uranus" class="planet-img" loading="lazy" draggable="false">
                 <div class="planet-info">
                     <h3 class="planet-name">Uranus</h3>
                     <p class="planet-desc">Ice giant, rotates sideways</p>
@@ -381,7 +385,7 @@
         <!-- Neptune -->
         <div class="planet-card neptune">
             <a href="neptune.html" class="planet-link">
-                <img src="https://picsum.photos/seed/neptune/200" alt="Neptune" class="planet-img">
+                <img src="https://picsum.photos/seed/neptune/200" alt="Neptune" class="planet-img" loading="lazy" draggable="false">
                 <div class="planet-info">
                     <h3 class="planet-name">Neptune</h3>
                     <p class="planet-desc">Windiest planet, dark and cold</p>
@@ -392,24 +396,6 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Create stars
-        const starsContainer = document.getElementById('stars');
-        const starCount = 100;
-
-        for (let i = 0; i < starCount; i++) {
-            const star = document.createElement('div');
-            star.classList.add('star');
-            
-            const size = Math.random() * 2 + 1;
-            star.style.width = `${size}px`;
-            star.style.height = `${size}px`;
-            star.style.left = `${Math.random() * 100}%`;
-            star.style.top = `${Math.random() * 100}%`;
-            star.style.animationDelay = `${Math.random() * 3}s`;
-            
-            starsContainer.appendChild(star);
-        }
-    </script>
+    
 </body>
 </html>
