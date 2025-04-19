@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Privacy Policy </title> <!-- Add the variable here -->
+    
+    <meta name="robots" content="noindex, nofollow, noarchive">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+  
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    
+    <link rel="stylesheet" href="style-content.css?v=1.1.47">
+    
+</head> 
+ 
+<body oncontextmenu="return false">
+    
+    <header class="sticky-header" role="banner">
+    
+          <i class="bi bi-arrow-left-short" role="button" aria-label="Go back" onclick="window.history.back();"></i> <!-- go-back-btn -->
+          <h3 id="header-heading" aria-live="polite"> Motivator </h3>
+
+    </header>
+        
+     <div class="container my-4">
+            
+       <h1 id="main-heading" class="text-center section-title"> Terms & Conditions </h1>
+       <p class="text-small text-center"> Last Updated: [17/12/2024]</p>
+    
+    <div class="section-content">
+        <h2 class="section-title">1. App Usage Guidelines </h2>
+        <ul>
+             <li> Motivator's purpose is to provide informative and interesting facts to users. </li>
+             <li> Users are encouraged to explore the app daily and engage with new facts. </li>
+             <li> Misuse of the app or use of inappropriate content is strictly prohibited. </li>
+        </ul>
+    </div>
+
+    <div class="section-content">
+        <h2 class="section-title">2. Data Collection & Privacy </h2>
+        <ul>
+             <li> Motivator does not collect any personal data of the user. </li>
+             <li> But if users contact us, we collect their name and email address, which is used only for communication. </li>
+             <li> Your data will be 100% secure and will never be shared with any third party. </li>
+        </ul>
+    </div>
+
+    <div class="section-content">
+        <h2 class="section-title">3. Third-Party Services </h2>
+        <ul>
+             <li> Currently, Motivator is not using any third-party service. </li>
+             <li> But in future, we may use AdMob ads. If this happens, information about these updates will be provided in the terms. </li>
+        </ul>
+    </div>
+
+    <div class="section-content">
+        <h2 class="section-title">4. Age Restrictions </h2>
+        <ul>
+             <li> Motivator can be used by anyone, regardless of age. </li>
+             <li> However, we recommend that the app is used by 18+ users. </li>
+        </ul>
+    </div>
+
+    <div class="section-content">
+        <h2 class="section-title">5. Intellectual Property </h2>
+        <ul>
+             <li> The facts available in the app are unique and not copyrighted. </li>
+             <li> The images shown in the app are taken from non-copyrighted sources (such as Picsum). </li>
+        </ul>
+    </div>
+
+    <div class="section-content">
+        <h2 class="section-title">6. Payment Terms </h2>
+        <ul>
+             <li> All contents of the Motivator are absolutely free. </li>
+             <li> There are no hidden charges or subscriptions. </li>
+        </ul>
+    </div>
+
+    <div class="section-content">
+        <h2 class="section-title">7. Account Termination </h2>
+        <p>
+            If a user violates guidelines or displays inappropriate behavior, we reserve the right to terminate their account without prior notice.
+        </p>
+    </div>
+
+    <div class="section-content">
+        <h2 class="section-title">8. Limitation of Liability </h2>
+        <ul>
+             <li> There are no chances of any direct or indirect problems arising due to the use of Motivator. </li>
+             <li> But we will not be responsible for any technical errors or bugs. </li>
+        </ul>
+    </div>
+
+    <div class="section-content">
+        <h2 class="section-title">9. Updates & Modifications </h2>
+        <ul>
+             <li> Our Terms & Conditions keep changing from time to time. </li>
+             <li> You will be notified of these updates, but it is the users' responsibility to check them regularly. </li>
+        </ul>
+    </div>
+
+    <div class="section-content">
+        <h2 class="section-title">10. Contact Information </h2>
+        <ul>
+            <li><strong>Email:</strong> <a href="mailto:Pal116719@gmail.com"> Pal116719@gmail.com </a></li>
+            <li><strong>Address:</strong> Motivator, [India, WB, Jhargram 721514 ]</li>
+        </ul>
+    </div>
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+     <!-- SweetAlert2 JS -->
+     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+          
+    <script>
+       const mainHeading = document.getElementById('main-heading');
+       const headerHeading = document.getElementById('header-heading');
+       const stickyHeader = document.querySelector('.sticky-header');
+
+       // Create an Intersection Observer
+       const observer = new IntersectionObserver(
+         ([entry]) => {
+           if (!entry.isIntersecting) {
+             // Replace sticky header text with main content heading
+             headerHeading.textContent = mainHeading.textContent;
+           //  stickyHeader.style.background = "#f8f9fa";  Slightly darker background
+             headerHeading.style.fontSize = "18px"; // Smaller font size
+             stickyHeader.style.borderBottom = "0.1px solid #ddd";
+           } else {
+             // Restore default header text
+             headerHeading.textContent = "Motivator";
+            // stickyHeader.style.background = "#ffffff";  Original background
+             headerHeading.style.fontSize = "20px"; // Original font size
+             stickyHeader.style.borderBottom = "none";
+           }
+         },
+         { 
+           rootMargin: "-50px 0px 0px 0px", // Trigger 50px before the heading leaves viewport
+           threshold: 0.1 
+         }
+       );
+
+    // Observe the main heading
+    observer.observe(mainHeading);
+  </script>
+    
+</body>
+</html>
