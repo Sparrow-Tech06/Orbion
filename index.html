@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Planets of the Solar System</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet"/>
+
+  <style>
+    .planet-container {
+      max-width: 660px;
+      margin: auto;
+    }
+
+    .planet-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background-color: #ffffff;
+      padding: 1rem;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      transition: transform 0.2s ease;
+      border: 1px solid #e3e3e3;
+    }
+
+    .planet-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .planet-content h5 {
+      margin: 0;
+      font-weight: 600;
+    }
+
+    .planet-content p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .chevron {
+      margin-left: auto;
+      color: #888;
+      font-size: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container py-5 planet-container">
+    <h2 class="text-center mb-4"><i class="bi bi-globe-americas"></i> Planets of the Solar System</h2>
+
+    <!-- Mercury -->
+    <a href="planet.html?name=Mercury" class="text-decoration-none text-dark">
+      <div class="planet-card">
+        <img src="https://img.icons8.com/color/96/mercury.png" alt="Mercury" class="planet-icon" />
+        <div class="planet-content">
+          <h5>Mercury</h5>
+          <p>Smallest and closest planet to the Sun.</p>
+        </div>
+        <i class="bi bi-chevron-right chevron"></i>
+      </div>
+    </a>
+
+    <!-- Venus -->
+    <a href="planet.html?name=Venus" class="text-decoration-none text-dark">
+      <div class="planet-card">
+        <img src="https://img.icons8.com/color/96/venus.png" alt="Venus" class="planet-icon" />
+        <div class="planet-content">
+          <h5>Venus</h5>
+          <p>Similar in size to Earth, but extremely hot.</p>
+        </div>
+        <i class="bi bi-chevron-right chevron"></i>
+      </div>
+    </a>
+
+    <!-- Earth -->
+    <a href="planet.html?name=Earth" class="text-decoration-none text-dark">
+      <div class="planet-card">
+        <img src="https://img.icons8.com/color/96/earth-planet.png" alt="Earth" class="planet-icon" />
+        <div class="planet-content">
+          <h5>Earth</h5>
+          <p>The only known planet to support life.</p>
+        </div>
+        <i class="bi bi-chevron-right chevron"></i>
+      </div>
+    </a>
+
+    <!-- Mars -->
+    <a href="planet.html?name=Mars" class="text-decoration-none text-dark">
+      <div class="planet-card">
+        <img src="https://img.icons8.com/color/96/mars.png" alt="Mars" class="planet-icon" />
+        <div class="planet-content">
+          <h5>Mars</h5>
+          <p>Known as the Red Planet. Potential for life.</p>
+        </div>
+        <i class="bi bi-chevron-right chevron"></i>
+      </div>
+    </a>
+
+    <!-- Add more planets below in same format -->
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

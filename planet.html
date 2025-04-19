@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Planet Details</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet"/>
+  <style>
+    .container {
+      max-width: 660px;
+    }
+    section {
+      margin-bottom: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container py-4">
+    <a href="index.html" class="btn btn-outline-secondary mb-3"><i class="bi bi-arrow-left"></i> Back</a>
+    <h1 id="planet-title" class="mb-4 text-center"></h1>
+
+    <div id="planet-content">
+      <!-- Content will be dynamically inserted here -->
+    </div>
+  </div>
+
+  <script>
+    const data = {
+      Mercury: {
+        title: "Mercury",
+        sections: [
+          { heading: "Overview", content: "Mercury is the closest planet to the Sun and the smallest in the Solar System." },
+          { heading: "Surface", content: "It has a rocky surface covered with craters, much like Earth's Moon." },
+          { heading: "Temperature", content: "Extremely hot during the day and freezing at night due to lack of atmosphere." }
+        ]
+      },
+      Venus: {
+        title: "Venus",
+        sections: [
+          { heading: "Overview", content: "Venus is the second planet from the Sun and similar in size to Earth." },
+          { heading: "Atmosphere", content: "It has a thick, toxic atmosphere mainly of carbon dioxide, with clouds of sulfuric acid." },
+          { heading: "Temperature", content: "It's the hottest planet due to a runaway greenhouse effect." }
+        ]
+      },
+      Earth: {
+        title: "Earth",
+        sections: [
+          { heading: "Overview", content: "Earth is the third planet from the Sun and the only known one with life." },
+          { heading: "Water", content: "Over 70% of Earth's surface is covered in water." },
+          { heading: "Atmosphere", content: "Supports life with oxygen, nitrogen, and a protective ozone layer." }
+        ]
+      },
+      Mars: {
+        title: "Mars",
+        sections: [
+          { heading: "Overview", content: "Mars is known as the Red Planet and is the fourth planet from the Sun." },
+          { heading: "Moons", content: "Mars has two small moons: Phobos and Deimos." },
+          { heading: "Exploration", content: "NASA and other agencies have sent multiple rovers to explore Mars' surface." }
+        ]
+      }
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const planet = params.get('name');
+
+    if (planet && data[planet]) {
+      document.getElementById("planet-title").textContent = data[planet].title;
+
+      let contentHTML = '';
+      data[planet].sections.forEach(section => {
+        contentHTML += `
+          <section>
+            <h4>${section.heading}</h4>
+            <p>${section.content}</p>
+          </section>
+        `;
+      });
+
+      document.getElementById("planet-content").innerHTML = contentHTML;
+    } else {
+      document.getElementById("planet-title").textContent = "Planet Not Found";
+      document.getElementById("planet-content").innerHTML = "<p>We couldn't find data for this planet.</p>";
+    }
+  </script>
+</body>
+</html>
